@@ -1,20 +1,17 @@
-# Todo New Tab Extension
+# NextTask Browser Extension
 
-Todo New Tab is a browser extension that replaces your new tab page with a simple, elegant todo list. It allows you to manage your daily tasks efficiently while providing a clean, distraction-free interface.
+NextTask is a productivity-focused browser extension that replaces your new tab page with a clean, elegant task manager. It allows you to organize your daily tasks efficiently while providing a distraction-free interface to boost your productivity.
 
-
-### LINK TO THE EXTENSION: [New Tab Todo](https://addons.mozilla.org/en-US/firefox/addon/todos-new-tab/)
-
-
-
-![image](https://i.ibb.co/HNYSzHN/Screenshot-2024-09-30-at-5-14-13-PM.png)
-
+![NextTask Extension Screenshot](https://i.ibb.co/HNYSzHN/Screenshot-2024-09-30-at-5-14-13-PM.png)
 
 ## Features
 
-- Replace new tab page with a todo list
-- Add, edit, and delete tasks
-- Mark tasks as completed
+- Replace new tab page with a task manager
+- Add, edit, and delete tasks seamlessly
+- Mark tasks as completed with visual feedback
+- Clean, minimalist design focused on productivity
+- Real-time date and time display
+- Persistent storage - your tasks are saved locally
 
 ## Installation
 
@@ -37,8 +34,8 @@ Todo New Tab is a browser extension that replaces your new tab page with a simpl
 ## File Structure
 
 - `index.html`: The main HTML structure of the new tab page
-- `styles.css`: CSS styles for the todo list and overall layout
-- `script.js`: JavaScript code for todo list functionality
+- `styles.css`: CSS styles for the task manager and overall layout
+- `script.js`: JavaScript code for task management functionality
 - `manifest.json`: Extension manifest file
 
 ## Technologies Used
@@ -56,11 +53,12 @@ This extension is designed to work with:
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Contributions are welcome! Please feel free to submit a Pull Request to help improve NextTask.
 
 ## License
 
 This project is open source and available under the [MIT License](LICENSE).
 
+---
 
-_Note: This extension was inspired by [this](https://chromewebstore.google.com/detail/todo-tab/ljkjodkdilmmlaiphehiceeblnnndhnd?hl=en)._
+**NextTask** - Stay organized, stay productive.

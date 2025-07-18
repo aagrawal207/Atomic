@@ -89,7 +89,7 @@ function handleEditTodo(index, newText) {
 
 function updateTitle() {
     const unfinishedCount = todos.filter(todo => !todo.completed).length;
-    document.title = unfinishedCount > 0 ? `(${unfinishedCount}) Task${unfinishedCount !== 1 ? 's' : ''} Remaining` : 'Todo New Tab';
+    document.title = unfinishedCount > 0 ? `(${unfinishedCount}) Task${unfinishedCount !== 1 ? 's' : ''} Remaining` : 'NextTask';
 }
 
 function updateDateTime() {
