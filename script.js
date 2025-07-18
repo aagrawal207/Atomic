@@ -8,13 +8,23 @@ function saveTodos() {
 function renderTodos() {
     const todoList = document.getElementById('todo-list');
     todoList.innerHTML = '';
-
+    
+    // Sort todos: incomplete items first, completed items at the bottom
+    const sortedTodos = [...todos].sort((a, b) => {
+        if (a.completed === b.completed) return 0;
+        return a.completed ? 1 : -1;
+    });
+    
+    // Update the main todos array with the sorted order
+    todos = sortedTodos;
+    
     todos.forEach((todo, index) => {
         const li = createTodoElement(todo, index);
         todoList.appendChild(li);
     });
 
     updateTitle();
+    toggleClearButtonVisibility();
 }
 
 function createTodoElement(todo, index) {
@@ -48,19 +58,16 @@ function createTodoElement(todo, index) {
         }
     });
 
-    const editButton = document.createElement('button');
-    editButton.className = 'Todo__Edit';
-    editButton.textContent = 'edit';
-    editButton.addEventListener('click', () => taskSpan.focus());
-
     const deleteButton = document.createElement('button');
     deleteButton.className = 'Todo__Delete';
     deleteButton.textContent = '×';
     deleteButton.addEventListener('click', () => handleDeleteTodo(index));
 
+    // Make the task span clickable for editing
+    taskSpan.addEventListener('click', () => taskSpan.focus());
+
     li.appendChild(checkDiv);
     li.appendChild(taskSpan);
-    li.appendChild(editButton);
     li.appendChild(deleteButton);
 
     return li;
@@ -230,6 +237,21 @@ function handleDrop(e) {
     draggedElement = null;
     return false;
 }
+
+function toggleClearButtonVisibility() {
+    const clearButton = document.getElementById('clear-completed');
+    const hasCompletedTasks = todos.some(todo => todo.completed);
+    clearButton.style.display = hasCompletedTasks ? 'block' : 'none';
+}
+
+function handleClearCompleted() {
+    todos = todos.filter(todo => !todo.completed);
+    saveTodos();
+    renderTodos();
+}
+
+// Clear completed button event listener
+document.getElementById('clear-completed').addEventListener('click', handleClearCompleted);
 
 // Initial render
 renderTodos();
