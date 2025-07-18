@@ -119,9 +119,17 @@ body {
     border: none;
     background: none;
     margin: 0 1em;
-    font-size: 14px;
+    font-size: 18px;
     color: #ccc;
     display: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
 }
 
 .Todo:hover {
@@ -129,7 +137,12 @@ body {
 }
 
 .Todo:hover .Todo__Delete {
-    display: block;
+    display: flex;
+}
+
+.Todo__Delete:hover {
+    background: rgba(255, 0, 0, 0.1);
+    color: #e74c3c;
 }
 
 .Todo__Task {
