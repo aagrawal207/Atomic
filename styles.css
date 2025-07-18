@@ -142,3 +142,37 @@ body {
     text-decoration: line-through;
     color: #ccc !important;
 }
+
+/* Drag and drop styles */
+.Todo.dragging {
+    opacity: 0.4;
+    background-color: #f5f5f5;
+    transform: scale(0.98);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.Todo.drag-over-top {
+    border-top: 2px solid #27ae60;
+    margin-top: -1px;
+    position: relative;
+    z-index: 1;
+    animation: shiftDown 0.2s ease;
+}
+
+.Todo.drag-over-bottom {
+    border-bottom: 2px solid #27ae60;
+    margin-bottom: -1px;
+    position: relative;
+    z-index: 1;
+    animation: shiftUp 0.2s ease;
+}
+
+@keyframes shiftDown {
+    0% { transform: translateY(-5px); }
+    100% { transform: translateY(0); }
+}
+
+@keyframes shiftUp {
+    0% { transform: translateY(5px); }
+    100% { transform: translateY(0); }
+}

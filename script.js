@@ -20,6 +20,15 @@ function renderTodos() {
 function createTodoElement(todo, index) {
     const li = document.createElement('li');
     li.className = `Todo ${todo.completed ? 'Todo--checked' : ''}`;
+    li.draggable = true;
+    li.dataset.index = index;
+    
+    // Add drag event listeners
+    li.addEventListener('dragstart', handleDragStart);
+    li.addEventListener('dragover', handleDragOver);
+    li.addEventListener('drop', handleDrop);
+    li.addEventListener('dragenter', handleDragEnter);
+    li.addEventListener('dragleave', handleDragLeave);
 
     const checkDiv = document.createElement('div');
     checkDiv.className = 'Todo__Check';
@@ -116,6 +125,111 @@ document.getElementById('new-todo').addEventListener('keypress', (e) => {
 // Update date and time
 setInterval(updateDateTime, 1000);
 updateDateTime();
+
+// Drag and drop functionality
+let draggedItemIndex = null;
+let draggedElement = null;
+
+function handleDragStart(e) {
+    draggedItemIndex = parseInt(this.dataset.index);
+    draggedElement = this;
+    this.classList.add('dragging');
+    
+    // Set ghost drag image (optional enhancement)
+    if (e.dataTransfer.setDragImage) {
+        const ghostElement = this.cloneNode(true);
+        ghostElement.style.opacity = '0.8';
+        document.body.appendChild(ghostElement);
+        e.dataTransfer.setDragImage(ghostElement, 10, 25);
+        setTimeout(() => document.body.removeChild(ghostElement), 0);
+    }
+    
+    e.dataTransfer.effectAllowed = 'move';
+}
+
+function handleDragOver(e) {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+    
+    const todoList = document.getElementById('todo-list');
+    const items = Array.from(todoList.querySelectorAll('.Todo:not(.dragging)'));
+    
+    // Clear previous indicators
+    items.forEach(item => {
+        item.classList.remove('drag-over-top');
+        item.classList.remove('drag-over-bottom');
+    });
+    
+    // Find the item we're currently hovering over
+    const targetItem = this;
+    if (targetItem === draggedElement) return false;
+    
+    // Determine if we're in the top or bottom half of the target item
+    const rect = targetItem.getBoundingClientRect();
+    const midY = rect.top + rect.height / 2;
+    const isAbove = e.clientY < midY;
+    
+    // Add appropriate class to show insertion point
+    if (isAbove) {
+        targetItem.classList.add('drag-over-top');
+    } else {
+        targetItem.classList.add('drag-over-bottom');
+    }
+    
+    return false;
+}
+
+function handleDragEnter(e) {
+    // We'll handle visual feedback in dragOver instead
+}
+
+function handleDragLeave(e) {
+    this.classList.remove('drag-over-top');
+    this.classList.remove('drag-over-bottom');
+}
+
+function handleDrop(e) {
+    e.stopPropagation();
+    
+    const dropIndex = parseInt(this.dataset.index);
+    if (draggedItemIndex !== dropIndex) {
+        // Determine if we're dropping before or after the target
+        const rect = this.getBoundingClientRect();
+        const midY = rect.top + rect.height / 2;
+        const dropBefore = e.clientY < midY;
+        
+        // Calculate the actual insertion index
+        let newIndex = dropIndex;
+        if (!dropBefore && dropIndex > draggedItemIndex) {
+            newIndex = dropIndex;
+        } else if (dropBefore && dropIndex < draggedItemIndex) {
+            newIndex = dropIndex;
+        } else if (dropBefore && dropIndex > draggedItemIndex) {
+            newIndex = dropIndex - 1;
+        } else if (!dropBefore && dropIndex < draggedItemIndex) {
+            newIndex = dropIndex + 1;
+        }
+        
+        // Reorder the todos array
+        const movedItem = todos[draggedItemIndex];
+        todos.splice(draggedItemIndex, 1);
+        todos.splice(newIndex, 0, movedItem);
+        saveTodos();
+        renderTodos();
+    }
+    
+    // Clean up
+    const todoList = document.getElementById('todo-list');
+    const items = Array.from(todoList.querySelectorAll('.Todo'));
+    items.forEach(item => {
+        item.classList.remove('drag-over-top');
+        item.classList.remove('drag-over-bottom');
+        item.classList.remove('dragging');
+    });
+    
+    draggedElement = null;
+    return false;
+}
 
 // Initial render
 renderTodos();
