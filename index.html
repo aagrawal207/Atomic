@@ -20,12 +20,13 @@
         <div class="todo-app">
             <div class="header-section">
                 <h1 class="heading">NextTask</h1>
-            </div>
-            <input type="text" id="new-todo" class="TextBox" placeholder="What's your next task?">
-            <ul id="todo-list" class="Todolist"></ul>
-            <div class="footer-section">
                 <button id="clear-completed" class="clear-link" style="display: none;">Clear completed</button>
             </div>
+            <input type="text" id="new-todo" class="TextBox" placeholder="What's your next task?">
+            <div id="limit-message" class="limit-message" style="display: none;">
+                Maximum of 8 tasks allowed. Complete or delete existing tasks to add new ones.
+            </div>
+            <ul id="todo-list" class="Todolist"></ul>
         </div>
     </div>
     <script src="script.js"></script>

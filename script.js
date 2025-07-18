@@ -1,4 +1,5 @@
 let todos = [];
+const MAX_TASKS = 8;
 
 function saveTodos() {
     browser.storage.local.set({ todos });
@@ -76,10 +77,15 @@ function createTodoElement(todo, index) {
 function handleAddTodo() {
     const text = document.getElementById('new-todo').value.trim();
     if (text) {
+        if (todos.length >= MAX_TASKS) {
+            showLimitMessage();
+            return;
+        }
         todos.push({ text, completed: false });
         saveTodos();
         renderTodos();
         document.getElementById('new-todo').value = '';
+        hideLimitMessage();
     }
 }
 
@@ -248,6 +254,25 @@ function handleClearCompleted() {
     todos = todos.filter(todo => !todo.completed);
     saveTodos();
     renderTodos();
+}
+
+function showLimitMessage() {
+    const messageElement = document.getElementById('limit-message');
+    messageElement.style.display = 'block';
+    messageElement.classList.add('show');
+    
+    // Auto hide after 3 seconds
+    setTimeout(() => {
+        hideLimitMessage();
+    }, 3000);
+}
+
+function hideLimitMessage() {
+    const messageElement = document.getElementById('limit-message');
+    messageElement.classList.remove('show');
+    setTimeout(() => {
+        messageElement.style.display = 'none';
+    }, 300);
 }
 
 // Clear completed button event listener
