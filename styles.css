@@ -89,13 +89,39 @@ body {
     border-top: 0;
     color: #333;
     background-color: #fff;
-    cursor: pointer;
     position: relative;
 }
 
+.Todo__DragHandle {
+    width: 16px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ddd;
+    cursor: grab;
+    font-size: 12px;
+    letter-spacing: -2px;
+    line-height: 1;
+    user-select: none;
+    transition: color 0.2s ease;
+}
+
+.Todo__DragHandle:hover {
+    color: #bbb;
+}
+
+.Todo:hover .Todo__DragHandle {
+    color: #999;
+}
+
+.Todo__DragHandle:active {
+    cursor: grabbing;
+}
+
 .Todo__Check {
-    padding: 0 1em;
-    width: 50px;
+    padding: 0 0.5em;
+    width: 40px;
     height: 50px;
     line-height: 3.7;
 }
@@ -113,6 +139,20 @@ body {
     flex: 1;
     padding: 13px 1em 13px 0;
     line-height: 1.5;
+    cursor: text;
+    border-radius: 3px;
+    transition: all 0.2s ease;
+}
+
+.Todo__Task:focus {
+    outline: none;
+    background: rgba(210, 203, 185, 0.1);
+    box-shadow: 0 0 0 2px rgba(210, 203, 185, 0.3);
+}
+
+.Todo__Task--editing {
+    background: rgba(210, 203, 185, 0.1);
+    box-shadow: 0 0 0 2px rgba(210, 203, 185, 0.3);
 }
 
 .Todo__Delete {
@@ -127,9 +167,9 @@ body {
     border-radius: 50%;
     transition: all 0.2s ease;
     cursor: pointer;
-    align-items: center;
-    justify-content: center;
     font-weight: bold;
+    line-height: 20px;
+    text-align: center;
 }
 
 .Todo:hover {
@@ -138,18 +178,13 @@ body {
 
 .Todo:hover .Todo__Delete {
     display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .Todo__Delete:hover {
     background: rgba(255, 0, 0, 0.1);
     color: #e74c3c;
-}
-
-.Todo__Task {
-    flex: 1;
-    padding: 13px 1em 13px 0;
-    line-height: 1.5;
-    cursor: text;
 }
 
 .Todo--checked .Todo__Check i {

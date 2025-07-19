@@ -31,15 +31,21 @@ function renderTodos() {
 function createTodoElement(todo, index) {
     const li = document.createElement('li');
     li.className = `Todo ${todo.completed ? 'Todo--checked' : ''}`;
-    li.draggable = true;
     li.dataset.index = index;
     
-    // Add drag event listeners
-    li.addEventListener('dragstart', handleDragStart);
+    // Add drag event listeners to the li for drop zones
     li.addEventListener('dragover', handleDragOver);
     li.addEventListener('drop', handleDrop);
     li.addEventListener('dragenter', handleDragEnter);
     li.addEventListener('dragleave', handleDragLeave);
+
+    const dragHandle = document.createElement('div');
+    dragHandle.className = 'Todo__DragHandle';
+    dragHandle.innerHTML = '⋮⋮';
+    dragHandle.draggable = true;
+    
+    // Add drag event listeners specifically to the drag handle
+    dragHandle.addEventListener('dragstart', handleDragStart);
 
     const checkDiv = document.createElement('div');
     checkDiv.className = 'Todo__Check';
@@ -57,6 +63,48 @@ function createTodoElement(todo, index) {
             e.preventDefault();
             taskSpan.blur();
         }
+        if (e.key === 'Escape') {
+            taskSpan.textContent = todo.text; // Reset to original text
+            taskSpan.blur();
+        }
+    });
+    
+    // Single click to focus and position cursor at end
+    taskSpan.addEventListener('click', (e) => {
+        e.preventDefault();
+        taskSpan.focus();
+        
+        // Position cursor at the end of the text
+        setTimeout(() => {
+            const range = document.createRange();
+            const selection = window.getSelection();
+            range.selectNodeContents(taskSpan);
+            range.collapse(false); // false means collapse to end
+            selection.removeAllRanges();
+            selection.addRange(range);
+        }, 0);
+    });
+
+    // Double-click to select all text for easier editing
+    taskSpan.addEventListener('dblclick', (e) => {
+        e.preventDefault();
+        const range = document.createRange();
+        range.selectNodeContents(taskSpan);
+        const selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+    });
+
+    // Add focus and blur styling
+    taskSpan.addEventListener('focus', () => {
+        isEditing = true;
+        taskSpan.classList.add('Todo__Task--editing');
+    });
+    
+    taskSpan.addEventListener('blur', () => {
+        isEditing = false;
+        taskSpan.classList.remove('Todo__Task--editing');
+        handleEditTodo(index, taskSpan.textContent);
     });
 
     const deleteButton = document.createElement('button');
@@ -64,9 +112,7 @@ function createTodoElement(todo, index) {
     deleteButton.textContent = '×';
     deleteButton.addEventListener('click', () => handleDeleteTodo(index));
 
-    // Make the task span clickable for editing
-    taskSpan.addEventListener('click', () => taskSpan.focus());
-
+    li.appendChild(dragHandle);
     li.appendChild(checkDiv);
     li.appendChild(taskSpan);
     li.appendChild(deleteButton);
@@ -101,17 +147,23 @@ function handleDeleteTodo(index) {
     renderTodos();
 }
 
+let isEditing = false;
+
 function handleEditTodo(index, newText) {
     if (newText.trim() !== '') {
         todos[index].text = newText.trim();
         saveTodos();
-        renderTodos();
+        // Only re-render if we're not immediately switching to edit another item
+        setTimeout(() => {
+            if (!isEditing) {
+                renderTodos();
+            }
+        }, 10);
     }
 }
 
 function updateTitle() {
-    const unfinishedCount = todos.filter(todo => !todo.completed).length;
-    document.title = unfinishedCount > 0 ? `(${unfinishedCount}) Task${unfinishedCount !== 1 ? 's' : ''} Remaining` : 'NextTask';
+    document.title = 'NextTask';
 }
 
 function updateDateTime() {
@@ -144,13 +196,14 @@ let draggedItemIndex = null;
 let draggedElement = null;
 
 function handleDragStart(e) {
-    draggedItemIndex = parseInt(this.dataset.index);
-    draggedElement = this;
-    this.classList.add('dragging');
+    const parentTodo = this.parentElement;
+    draggedItemIndex = parseInt(parentTodo.dataset.index);
+    draggedElement = parentTodo;
+    parentTodo.classList.add('dragging');
     
     // Set ghost drag image (optional enhancement)
     if (e.dataTransfer.setDragImage) {
-        const ghostElement = this.cloneNode(true);
+        const ghostElement = parentTodo.cloneNode(true);
         ghostElement.style.opacity = '0.8';
         document.body.appendChild(ghostElement);
         e.dataTransfer.setDragImage(ghostElement, 10, 25);
