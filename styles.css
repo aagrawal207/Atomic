@@ -212,6 +212,18 @@ body {
     border-color: #27ae60;
 }
 
+.Todo--priority-high .Todo__Check i:hover {
+    border-color: #ff4757;
+}
+
+.Todo--priority-medium .Todo__Check i:hover {
+    border-color: #ffa502;
+}
+
+.Todo--priority-low .Todo__Check i:hover {
+    border-color: #ffdd59;
+}
+
 .Todo__Task {
     flex: 1;
     padding: 13px 1em 13px 0;
@@ -235,6 +247,24 @@ body {
     background: rgba(39, 174, 96, 0.05);
     border-left: 3px solid #27ae60;
     padding-left: calc(1em - 3px);
+}
+
+.Todo--priority-high .Todo__Task:focus,
+.Todo--priority-high .Todo__Task--editing {
+    background: rgba(255, 71, 87, 0.05);
+    border-left: 3px solid #ff4757;
+}
+
+.Todo--priority-medium .Todo__Task:focus,
+.Todo--priority-medium .Todo__Task--editing {
+    background: rgba(255, 165, 2, 0.05);
+    border-left: 3px solid #ffa502;
+}
+
+.Todo--priority-low .Todo__Task:focus,
+.Todo--priority-low .Todo__Task--editing {
+    background: rgba(255, 221, 89, 0.05);
+    border-left: 3px solid #ffdd59;
 }
 
 .Todo__Priority {
@@ -342,8 +372,23 @@ body {
 }
 
 .Todo:hover {
-    background: rgba(39, 174, 96, 0.02);
+    background: rgba(39, 174, 96, 0.05);
     border-color: #d4f4dd;
+}
+
+.Todo--priority-high:hover {
+    background: rgba(255, 71, 87, 0.1);
+    border-color: rgba(255, 71, 87, 0.3);
+}
+
+.Todo--priority-medium:hover {
+    background: rgba(255, 165, 2, 0.1);
+    border-color: rgba(255, 165, 2, 0.3);
+}
+
+.Todo--priority-low:hover {
+    background: rgba(255, 221, 89, 0.1);
+    border-color: rgba(255, 221, 89, 0.3);
 }
 
 .Todo:hover .Todo__Priority {
