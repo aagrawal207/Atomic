@@ -506,3 +506,18 @@ body {
 .limit-message.show {
     opacity: 1;
 }
+
+.app-branding {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #27ae60;
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+}
+
+.app-branding:hover {
+    opacity: 1;
+}
