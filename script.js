@@ -1,9 +1,43 @@
-let todos = [];
-const MAX_TASKS = 8;
+// Configuration
+const CONFIG = {
+    MAX_TASKS: 8,
+    AUTO_HIDE_DELAY: 3000,
+    DEBOUNCE_DELAY: 300
+};
 
+// State management
+let todos = [];
+let isEditing = false;
+let isTogglingCheckbox = false;
+
+// Utility functions
+const debounce = (func, wait) => {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+};
+
+const createElement = (tag, className, content = '') => {
+    const element = document.createElement(tag);
+    if (className) element.className = className;
+    if (content) element.textContent = content;
+    return element;
+};
+
+// Core functions
 function saveTodos() {
-    browser.storage.local.set({ todos });
-    updateTitle();
+    try {
+        browser.storage.local.set({ todos });
+        updateTitle();
+    } catch (error) {
+        console.error('Failed to save todos:', error);
+    }
 }
 
 function renderTodos() {
@@ -118,40 +152,52 @@ function createTodoElement(todo, index) {
 
 function handleAddTodo() {
     const text = document.getElementById('new-todo').value.trim();
-    if (text) {
-        if (todos.length >= MAX_TASKS) {
-            showLimitMessage();
-            return;
-        }
-        todos.push({ text, completed: false });
-        saveTodos();
-        renderTodos();
-        document.getElementById('new-todo').value = '';
-        hideLimitMessage();
+    if (!text) return;
+    
+    if (todos.length >= CONFIG.MAX_TASKS) {
+        showLimitMessage();
+        return;
     }
+    
+    todos.push({ text, completed: false });
+    saveTodos();
+    renderTodos();
+    document.getElementById('new-todo').value = '';
+    hideLimitMessage();
 }
 
 function handleToggleTodo(index) {
+    if (index < 0 || index >= todos.length) return;
+    
+    isTogglingCheckbox = true;
     todos[index].completed = !todos[index].completed;
     saveTodos();
     renderTodos();
+    
+    setTimeout(() => {
+        isTogglingCheckbox = false;
+    }, 50);
 }
 
 function handleDeleteTodo(index) {
+    if (index < 0 || index >= todos.length) return;
+    
     todos.splice(index, 1);
     saveTodos();
     renderTodos();
 }
 
-let isEditing = false;
-
 function handleEditTodo(index, newText) {
-    if (newText.trim() !== '') {
-        todos[index].text = newText.trim();
+    if (index < 0 || index >= todos.length) return;
+    
+    const trimmedText = newText.trim();
+    if (trimmedText && trimmedText !== todos[index].text) {
+        todos[index].text = trimmedText;
         saveTodos();
-        // Only re-render if we're not immediately switching to edit another item
+        
+        // Debounced re-render to prevent conflicts
         setTimeout(() => {
-            if (!isEditing) {
+            if (!isEditing && !isTogglingCheckbox) {
                 renderTodos();
             }
         }, 10);
@@ -171,21 +217,6 @@ function updateDateTime() {
     dateElement.textContent = now.toLocaleDateString('en-US', options);
     timeElement.textContent = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
 }
-
-// Load todos from storage
-browser.storage.local.get('todos').then((result) => {
-    todos = result.todos || [];
-    renderTodos();
-});
-
-// Add new todo
-document.getElementById('new-todo').addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') handleAddTodo();
-});
-
-// Update date and time
-setInterval(updateDateTime, 1000);
-updateDateTime();
 
 // Drag and drop functionality
 let draggedItemIndex = null;
@@ -296,10 +327,13 @@ function handleDrop(e) {
 function toggleClearButtonVisibility() {
     const clearButton = document.getElementById('clear-completed');
     const hasCompletedTasks = todos.some(todo => todo.completed);
-    clearButton.style.display = hasCompletedTasks ? 'block' : 'none';
+    clearButton.hidden = !hasCompletedTasks;
 }
 
 function handleClearCompleted() {
+    const completedCount = todos.filter(todo => todo.completed).length;
+    if (completedCount === 0) return;
+    
     todos = todos.filter(todo => !todo.completed);
     saveTodos();
     renderTodos();
@@ -307,25 +341,60 @@ function handleClearCompleted() {
 
 function showLimitMessage() {
     const messageElement = document.getElementById('limit-message');
-    messageElement.style.display = 'block';
+    messageElement.hidden = false;
     messageElement.classList.add('show');
     
-    // Auto hide after 3 seconds
-    setTimeout(() => {
-        hideLimitMessage();
-    }, 3000);
+    // Auto hide after configured delay
+    setTimeout(hideLimitMessage, CONFIG.AUTO_HIDE_DELAY);
 }
 
 function hideLimitMessage() {
     const messageElement = document.getElementById('limit-message');
     messageElement.classList.remove('show');
     setTimeout(() => {
-        messageElement.style.display = 'none';
+        messageElement.hidden = true;
     }, 300);
 }
 
-// Clear completed button event listener
-document.getElementById('clear-completed').addEventListener('click', handleClearCompleted);
+// Event listeners
+function initializeEventListeners() {
+    // Form submission
+    document.querySelector('.add-task-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        handleAddTodo();
+    });
+    
+    // Input keypress (backup for form submission)
+    document.getElementById('new-todo').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            handleAddTodo();
+        }
+    });
+    
+    // Clear completed button
+    document.getElementById('clear-completed').addEventListener('click', handleClearCompleted);
+    
+    // Date/time updates
+    setInterval(updateDateTime, 1000);
+    updateDateTime();
+}
 
-// Initial render
-renderTodos();
+// Initialize storage and render
+async function initialize() {
+    try {
+        const result = await browser.storage.local.get('todos');
+        todos = result.todos || [];
+        renderTodos();
+        initializeEventListeners();
+    } catch (error) {
+        console.error('Failed to load todos:', error);
+        // Initialize with empty array if storage fails
+        todos = [];
+        renderTodos();
+        initializeEventListeners();
+    }
+}
+
+// Start application
+initialize();

@@ -1,35 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Atomic</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
-    <div class="app">
-        <div class="DateTime">
-            <span class="DateTime__Date" id="date"></span>
-            <span class="DateTime__Time" id="time"></span>
-        </div>
-        <div class="todo-app">
-            <div class="header-section">
+    <main class="app">
+        <header class="DateTime">
+            <time class="DateTime__Date" id="date"></time>
+            <time class="DateTime__Time" id="time"></time>
+        </header>
+        
+        <section class="todo-app">
+            <header class="header-section">
                 <h1 class="heading">Atomic</h1>
-                <button id="clear-completed" class="clear-link" style="display: none;">Clear completed</button>
-            </div>
-            <input type="text" id="new-todo" class="TextBox" placeholder="What's your next task?">
-            <ul id="todo-list" class="Todolist"></ul>
-            <div id="limit-message" class="limit-message" style="display: none;">
+                <button id="clear-completed" class="clear-link" hidden>clear completed</button>
+            </header>
+            
+            <form class="add-task-form">
+                <!-- <label for="new-todo" class="sr-only">Add new task</label> -->
+                <input type="text" id="new-todo" class="TextBox" placeholder="What's your next task?" autocomplete="off" maxlength="100">
+            </form>
+            
+            <ul id="todo-list" class="Todolist" role="list"></ul>
+            
+            <div id="limit-message" class="limit-message" hidden role="alert">
                 Maximum of 8 tasks allowed. Complete or delete existing tasks to add new ones.
             </div>
-        </div>
-    </div>
+        </section>
+    </main>
+    
     <script src="script.js"></script>
 </body>
-
 </html>

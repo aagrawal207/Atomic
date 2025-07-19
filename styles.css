@@ -1,7 +1,23 @@
-* {
+/* CSS Reset & Base Styles */
+*,
+*::before,
+*::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+/* Screen reader only content */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
 }
 
 html {
@@ -18,9 +34,63 @@ body {
 }
 
 .app {
-    padding: 0 0 2em;
-    width: 600px;
-    margin: auto;
+    padding: 0 1rem 2rem;
+    max-width: 600px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* Responsive design improvements */
+@media (max-width: 640px) {
+    .app {
+        padding: 0 0.75rem 1.5rem;
+    }
+    
+    .DateTime {
+        margin: 2rem 0;
+    }
+    
+    .DateTime__Time {
+        font-size: 2.5rem;
+    }
+    
+    .heading {
+        font-size: 1.5rem;
+    }
+    
+    .TextBox {
+        height: 2.75rem;
+        font-size: 0.875rem;
+    }
+}
+
+/* Performance optimizations */
+.Todo {
+    will-change: transform;
+}
+
+.Todo.dragging {
+    will-change: transform, opacity;
+}
+
+/* Improved focus indicators */
+.TextBox:focus-visible,
+.Todo__Task:focus-visible,
+.clear-link:focus-visible,
+.Todo__Delete:focus-visible {
+    outline: 2px solid #27ae60;
+    outline-offset: 2px;
+}
+
+/* Reduced motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
 }
 
 .DateTime {
