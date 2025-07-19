@@ -159,7 +159,7 @@ function handleEditTodo(index, newText) {
 }
 
 function updateTitle() {
-    document.title = 'NextTask';
+    document.title = 'Atomic';
 }
 
 function updateDateTime() {

@@ -1,8 +1,8 @@
-# NextTask Browser Extension
+# Atomic Browser Extension
 
-NextTask is a productivity-focused browser extension that replaces your new tab page with a clean, elegant task manager. It allows you to organize your daily tasks efficiently while providing a distraction-free interface to boost your productivity.
+Atomic is a productivity-focused browser extension that replaces your new tab page with a clean, elegant task manager. It allows you to organize your daily tasks efficiently while providing a distraction-free interface to boost your productivity.
 
-![NextTask Extension Screenshot](https://i.ibb.co/HNYSzHN/Screenshot-2024-09-30-at-5-14-13-PM.png)
+![Atomic Extension Screenshot](https://i.ibb.co/HNYSzHN/Screenshot-2024-09-30-at-5-14-13-PM.png)
 
 ## Features
 
@@ -12,6 +12,9 @@ NextTask is a productivity-focused browser extension that replaces your new tab 
 - Clean, minimalist design focused on productivity
 - Real-time date and time display
 - Persistent storage - your tasks are saved locally
+- Drag and drop task reordering with intuitive handle
+- Maximum 8 tasks limit for focused productivity
+- Smart editing with cursor positioning and keyboard shortcuts
 
 ## Installation
 
@@ -28,8 +31,10 @@ NextTask is a productivity-focused browser extension that replaces your new tab 
 2. You'll see the current date and time at the top of the page.
 3. To add a new task, type it into the input field and press Enter.
 4. To mark a task as completed, click the circle next to the task.
-5. To edit a task, click the `edit` button or directly click on the task text.
-6. To delete a task, click the `×` button.
+5. To edit a task, click on the task text to start editing.
+6. To delete a task, hover over the task and click the `×` button.
+7. To reorder tasks, drag them using the drag handle (dots) on the left.
+8. To clear all completed tasks, click the "clear completed" link at the top right.
 
 ## File Structure
 
@@ -53,7 +58,7 @@ This extension is designed to work with:
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request to help improve NextTask.
+Contributions are welcome! Please feel free to submit a Pull Request to help improve Atomic.
 
 ## License
 
@@ -61,4 +66,4 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ---
 
-**NextTask** - Stay organized, stay productive.
+**Atomic** - Stay organized, stay productive.

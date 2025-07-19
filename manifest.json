@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
-  "name": "NextTask",
+  "name": "Atomic",
   "version": "1.0",
-  "description": "NextTask - A productivity-focused task manager that replaces your new tab page. Organize your daily tasks efficiently with a clean, distraction-free interface.",
+  "description": "Atomic - A productivity-focused task manager that replaces your new tab page. Organize your daily tasks efficiently with a clean, distraction-free interface.",
   "chrome_url_overrides": {
     "newtab": "index.html"
   },
@@ -11,7 +11,7 @@
   ],
   "browser_specific_settings": {
     "gecko": {
-      "id": "nexttask@example.com"
+      "id": "atomic@example.com"
     }
   }
 }
