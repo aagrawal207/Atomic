@@ -2,7 +2,8 @@
   "manifest_version": 2,
   "name": "Atomic",
   "version": "1.0",
-  "description": "Atomic - A productivity-focused task manager that replaces your new tab page. Organize your daily tasks efficiently with a clean, distraction-free interface.",
+  "description": "Transform your new tab into a minimalist task manager. Focus on what matters with a clean, elegant interface and smart task prioritization.",
+  "homepage_url": "https://github.com/aagrawal207/Atomic",
   "chrome_url_overrides": {
     "newtab": "index.html"
   },
