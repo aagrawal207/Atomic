@@ -70,19 +70,24 @@ function createTodoElement(todo, index) {
     });
     
     // Single click to focus and position cursor at end
+    taskSpan.addEventListener('mousedown', (e) => {
+        e.preventDefault();
+    });
+    
     taskSpan.addEventListener('click', (e) => {
         e.preventDefault();
+        e.stopPropagation();
+        
+        // Focus without showing intermediate cursor position
         taskSpan.focus();
         
-        // Position cursor at the end of the text
-        setTimeout(() => {
-            const range = document.createRange();
-            const selection = window.getSelection();
-            range.selectNodeContents(taskSpan);
-            range.collapse(false); // false means collapse to end
-            selection.removeAllRanges();
-            selection.addRange(range);
-        }, 0);
+        // Immediately position cursor at the end
+        const range = document.createRange();
+        const selection = window.getSelection();
+        range.selectNodeContents(taskSpan);
+        range.collapse(false); // false means collapse to end
+        selection.removeAllRanges();
+        selection.addRange(range);
     });
 
     // Double-click to select all text for easier editing

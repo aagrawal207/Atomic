@@ -146,13 +146,15 @@ body {
 
 .Todo__Task:focus {
     outline: none;
-    background: rgba(210, 203, 185, 0.1);
-    box-shadow: 0 0 0 2px rgba(210, 203, 185, 0.3);
+    background: rgba(255, 255, 255, 0.8);
+    border-left: 3px solid #27ae60;
+    padding-left: calc(1em - 3px);
 }
 
 .Todo__Task--editing {
-    background: rgba(210, 203, 185, 0.1);
-    box-shadow: 0 0 0 2px rgba(210, 203, 185, 0.3);
+    background: rgba(255, 255, 255, 0.8);
+    border-left: 3px solid #27ae60;
+    padding-left: calc(1em - 3px);
 }
 
 .Todo__Delete {
