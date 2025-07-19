@@ -142,19 +142,11 @@ body {
     cursor: text;
     border-radius: 3px;
     transition: all 0.2s ease;
+    min-width: 0; /* Prevent flex item from overflowing */
 }
 
 .Todo__Task:focus {
     outline: none;
-    background: rgba(255, 255, 255, 0.8);
-    border-left: 3px solid #27ae60;
-    padding-left: calc(1em - 3px);
-}
-
-.Todo__Task--editing {
-    background: rgba(255, 255, 255, 0.8);
-    border-left: 3px solid #27ae60;
-    padding-left: calc(1em - 3px);
 }
 
 .Todo__Delete {

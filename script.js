@@ -51,12 +51,17 @@ function createTodoElement(todo, index) {
     checkDiv.className = 'Todo__Check';
     const checkI = document.createElement('i');
     checkDiv.appendChild(checkI);
-    checkDiv.addEventListener('click', () => handleToggleTodo(index));
+    checkDiv.addEventListener('click', (e) => {
+        // Ensure this event always works, even when another item is being edited
+        e.stopPropagation();
+        handleToggleTodo(index);
+    });
 
     const taskSpan = document.createElement('span');
     taskSpan.className = 'Todo__Task';
     taskSpan.textContent = todo.text;
     taskSpan.contentEditable = true;
+    taskSpan.spellcheck = false;
     taskSpan.addEventListener('blur', () => handleEditTodo(index, taskSpan.textContent));
     taskSpan.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
@@ -69,25 +74,11 @@ function createTodoElement(todo, index) {
         }
     });
     
-    // Single click to focus and position cursor at end
-    taskSpan.addEventListener('mousedown', (e) => {
-        e.preventDefault();
-    });
-    
+    // Allow normal click behavior to position cursor where clicked
     taskSpan.addEventListener('click', (e) => {
-        e.preventDefault();
         e.stopPropagation();
-        
-        // Focus without showing intermediate cursor position
         taskSpan.focus();
-        
-        // Immediately position cursor at the end
-        const range = document.createRange();
-        const selection = window.getSelection();
-        range.selectNodeContents(taskSpan);
-        range.collapse(false); // false means collapse to end
-        selection.removeAllRanges();
-        selection.addRange(range);
+        // Let the browser handle cursor positioning naturally
     });
 
     // Double-click to select all text for easier editing
