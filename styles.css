@@ -232,8 +232,13 @@ body {
     border-radius: 3px;
     transition: all 0.2s ease;
     min-width: 0;
-    caret-color: #27ae60;
+    caret-color: #1e8449; /* Darker green for more visibility */
+    caret-shape: block; /* Experimental property for some browsers */
     font-weight: 500;
+}
+
+.Todo__Task::selection {
+    background-color: rgba(39, 174, 96, 0.2);
 }
 
 .Todo__Task:focus {
@@ -253,18 +258,21 @@ body {
 .Todo--priority-high .Todo__Task--editing {
     background: rgba(255, 71, 87, 0.05);
     border-left: 3px solid #ff4757;
+    caret-color: #d81f3d; /* Darker red for better visibility */
 }
 
 .Todo--priority-medium .Todo__Task:focus,
 .Todo--priority-medium .Todo__Task--editing {
     background: rgba(255, 165, 2, 0.05);
     border-left: 3px solid #ffa502;
+    caret-color: #e67e00; /* Darker orange for better visibility */
 }
 
 .Todo--priority-low .Todo__Task:focus,
 .Todo--priority-low .Todo__Task--editing {
     background: rgba(255, 221, 89, 0.05);
     border-left: 3px solid #ffdd59;
+    caret-color: #e6c700; /* Darker yellow for better visibility */
 }
 
 .Todo__Priority {
