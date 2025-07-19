@@ -44,10 +44,32 @@ function renderTodos() {
     const todoList = document.getElementById('todo-list');
     todoList.innerHTML = '';
     
-    // Sort todos: incomplete items first, completed items at the bottom
+    // Priority order: high=1, medium=2, low=3, none=4
+    const getPriorityOrder = (priority) => {
+        switch (priority) {
+            case 'high': return 1;
+            case 'medium': return 2;
+            case 'low': return 3;
+            default: return 4;
+        }
+    };
+    
+    // Sort todos: incomplete items first (by priority), then completed items
     const sortedTodos = [...todos].sort((a, b) => {
-        if (a.completed === b.completed) return 0;
-        return a.completed ? 1 : -1;
+        // First, separate completed from incomplete
+        if (a.completed !== b.completed) {
+            return a.completed ? 1 : -1;
+        }
+        
+        // For incomplete items, sort by priority
+        if (!a.completed && !b.completed) {
+            const priorityA = getPriorityOrder(a.priority || 'none');
+            const priorityB = getPriorityOrder(b.priority || 'none');
+            return priorityA - priorityB;
+        }
+        
+        // For completed items, maintain current order
+        return 0;
     });
     
     // Update the main todos array with the sorted order
@@ -137,14 +159,52 @@ function createTodoElement(todo, index) {
         handleEditTodo(index, taskSpan.textContent);
     });
 
+    // Priority buttons container
+    const priorityDiv = document.createElement('div');
+    priorityDiv.className = 'Todo__Priority';
+
+    const highPriorityBtn = document.createElement('button');
+    highPriorityBtn.className = 'priority-high';
+    highPriorityBtn.title = 'Set high priority';
+    highPriorityBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        handleSetPriority(index, 'high');
+    });
+
+    const mediumPriorityBtn = document.createElement('button');
+    mediumPriorityBtn.className = 'priority-medium';
+    mediumPriorityBtn.title = 'Set medium priority';
+    mediumPriorityBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        handleSetPriority(index, 'medium');
+    });
+
+    const lowPriorityBtn = document.createElement('button');
+    lowPriorityBtn.className = 'priority-low';
+    lowPriorityBtn.title = 'Set low priority';
+    lowPriorityBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        handleSetPriority(index, 'low');
+    });
+
+    priorityDiv.appendChild(highPriorityBtn);
+    priorityDiv.appendChild(mediumPriorityBtn);
+    priorityDiv.appendChild(lowPriorityBtn);
+
     const deleteButton = document.createElement('button');
     deleteButton.className = 'Todo__Delete';
     deleteButton.textContent = '×';
     deleteButton.addEventListener('click', () => handleDeleteTodo(index));
 
+    // Add priority class to the todo item
+    if (todo.priority && todo.priority !== 'none') {
+        li.classList.add(`Todo--priority-${todo.priority}`);
+    }
+
     li.appendChild(dragHandle);
     li.appendChild(checkDiv);
     li.appendChild(taskSpan);
+    li.appendChild(priorityDiv);
     li.appendChild(deleteButton);
 
     return li;
@@ -159,7 +219,7 @@ function handleAddTodo() {
         return;
     }
     
-    todos.push({ text, completed: false });
+    todos.push({ text, completed: false, priority: 'none' });
     saveTodos();
     renderTodos();
     document.getElementById('new-todo').value = '';
@@ -202,6 +262,18 @@ function handleEditTodo(index, newText) {
             }
         }, 10);
     }
+}
+
+function handleSetPriority(index, priority) {
+    if (index < 0 || index >= todos.length) return;
+    
+    // Toggle priority: if same priority is clicked, remove it
+    const currentPriority = todos[index].priority || 'none';
+    const newPriority = currentPriority === priority ? 'none' : priority;
+    
+    todos[index].priority = newPriority;
+    saveTodos();
+    renderTodos();
 }
 
 function updateTitle() {
@@ -385,6 +457,18 @@ async function initialize() {
     try {
         const result = await browser.storage.local.get('todos');
         todos = result.todos || [];
+        
+        // Add backward compatibility for existing todos without priority
+        todos = todos.map(todo => ({
+            ...todo,
+            priority: todo.priority || 'none'
+        }));
+        
+        // Save updated todos if any were missing priority
+        if (todos.some(todo => !('priority' in todo))) {
+            saveTodos();
+        }
+        
         renderTodos();
         initializeEventListeners();
     } catch (error) {

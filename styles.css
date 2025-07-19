@@ -170,7 +170,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #ddd;
+    color: #888;
     cursor: grab;
     font-size: 12px;
     letter-spacing: -2px;
@@ -180,11 +180,11 @@ body {
 }
 
 .Todo__DragHandle:hover {
-    color: #bbb;
+    color: #555;
 }
 
 .Todo:hover .Todo__DragHandle {
-    color: #999;
+    color: #444;
 }
 
 .Todo__DragHandle:active {
@@ -237,6 +237,93 @@ body {
     padding-left: calc(1em - 3px);
 }
 
+.Todo__Priority {
+    display: none;
+    align-items: center;
+    gap: 4px;
+    margin: 0 8px;
+}
+
+.Todo__Priority button {
+    width: 16px;
+    height: 16px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+}
+
+.Todo__Priority button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.Todo__Priority button:active {
+    transform: scale(0.95);
+}
+
+.Todo__Priority .priority-high {
+    background: linear-gradient(135deg, #ff4757, #ff3742);
+}
+
+.Todo__Priority .priority-medium {
+    background: linear-gradient(135deg, #ffa502, #ff9500);
+}
+
+.Todo__Priority .priority-low {
+    background: linear-gradient(135deg, #ffdd59, #ffd32a);
+}
+
+.Todo__Priority button::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.Todo__Priority button:hover::after {
+    opacity: 1;
+}
+
+.Todo--priority-high {
+    border-left: 3px solid #ff4757;
+    background: linear-gradient(90deg, rgba(255, 71, 87, 0.05), transparent);
+}
+
+.Todo--priority-medium {
+    border-left: 3px solid #ffa502;
+    background: linear-gradient(90deg, rgba(255, 165, 2, 0.05), transparent);
+}
+
+.Todo--priority-low {
+    border-left: 3px solid #ffdd59;
+    background: linear-gradient(90deg, rgba(255, 221, 89, 0.05), transparent);
+}
+
+.Todo--priority-high .Todo__Task {
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+.Todo--priority-medium .Todo__Task {
+    color: #2c3e50;
+    font-weight: 550;
+}
+
+.Todo--priority-low .Todo__Task {
+    color: #2c3e50;
+    font-weight: 500;
+}
+
 .Todo__Delete {
     border: none;
     background: none;
@@ -250,13 +337,17 @@ body {
     transition: all 0.2s ease;
     cursor: pointer;
     font-weight: bold;
-    line-height: 20px;
+    line-height: 1;
     text-align: center;
 }
 
 .Todo:hover {
     background: rgba(39, 174, 96, 0.02);
     border-color: #d4f4dd;
+}
+
+.Todo:hover .Todo__Priority {
+    display: flex;
 }
 
 .Todo:hover .Todo__Delete {
@@ -266,7 +357,7 @@ body {
 }
 
 .Todo__Delete:hover {
-    background: rgba(255, 0, 0, 0.1);
+    background: none;
     color: #e74c3c;
 }
 
