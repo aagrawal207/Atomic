@@ -34,12 +34,6 @@ Atomic is a productivity-focused browser extension that transforms your new tab 
 4. Select any file from the extension directory
 5. The extension will be active immediately
 
-### For Developers
-```bash
-git clone https://github.com/yourusername/atomic-task-manager.git
-cd atomic-task-manager
-```
-
 ## 🚀 Usage
 
 ### Getting Started
@@ -127,13 +121,13 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - **Original Project**: [NewTab-Todo](https://github.com/mraza007/NewTab-Todo) by [@mraza007](https://github.com/mraza007)
 - **Font**: [Montserrat](https://fonts.google.com/specimen/Montserrat) by Google Fonts
-- **Inspiration**: Modern productivity tools and minimalist design principles
+- **Inspiration**: Modern productivity tools and minimalist design principles. Specially [MinimaList](https://apps.apple.com/us/app/to-do-list-minimalist-widget/id993066159).
 
 ## 📈 Roadmap
 
 - [ ] Manifest V3 compatibility for Chrome
 - [ ] Dark mode toggle
-- [ ] Task categories/tags
+- [ ] Pomodoro Timer
 - [ ] Export/import functionality
 - [ ] Sync across devices
 
