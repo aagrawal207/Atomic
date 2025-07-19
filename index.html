@@ -24,7 +24,15 @@
             
             <form class="add-task-form">
                 <!-- <label for="new-todo" class="sr-only">Add new task</label> -->
-                <input type="text" id="new-todo" class="TextBox" placeholder="What's your next task?" autocomplete="off" maxlength="100">
+                <div class="input-container">
+                    <input type="text" id="new-todo" class="TextBox" placeholder="What's your next task?" autocomplete="off" maxlength="100">
+                    <div class="input-priority-buttons">
+                        <button type="button" id="new-priority-high" class="priority-btn priority-high" title="High priority"></button>
+                        <button type="button" id="new-priority-medium" class="priority-btn priority-medium" title="Medium priority"></button>
+                        <button type="button" id="new-priority-low" class="priority-btn priority-low" title="Low priority"></button>
+                    </div>
+                    <button type="button" id="add-task-btn" class="add-task-btn" title="Add task">&#10095;</button>
+                </div>
             </form>
             
             <ul id="todo-list" class="Todolist" role="list"></ul>

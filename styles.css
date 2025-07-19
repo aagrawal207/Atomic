@@ -121,6 +121,12 @@ body {
     text-align: center;
 }
 
+/* Input container and priority buttons */
+.input-container {
+    position: relative;
+    width: 100%;
+}
+
 .TextBox {
     height: 50px;
     border: 0;
@@ -130,11 +136,93 @@ body {
     color: #333;
     outline: none;
     font-size: 15px;
-    padding: 0 15px;
+    padding: 0 150px 0 15px; /* Make room for priority buttons and add button */
     font-family: inherit;
     border-radius: 6px;
-    caret-color: #27ae60;
+    caret-color: #1e8449; /* Darker green for more visibility */
+    caret-shape: block; /* Experimental property for some browsers */
     font-weight: 500;
+}
+
+.input-priority-buttons {
+    position: absolute;
+    right: 55px; /* Increased from 50px to 55px to create more space */
+    top: 50%;
+    transform: translateY(-50%);
+    display: none; /* Hidden by default */
+    gap: 8px;
+}
+
+.add-task-btn {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 28px;
+    height: 28px;
+    border: none;
+    border-radius: 4px; /* Square with slightly rounded corners */
+    background: #27ae60;
+    color: white;
+    font-size: 16px;
+    line-height: 1;
+    display: none; /* Hidden by default */
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.add-task-btn:hover {
+    background: #219653;
+    transform: translateY(-50%) scale(1.05);
+}
+
+.add-task-btn:active {
+    transform: translateY(-50%) scale(0.95);
+}
+
+.add-task-btn.show {
+    display: flex;
+}
+
+.input-priority-buttons.show {
+    display: flex;
+}
+
+.priority-btn {
+    width: 18px;
+    height: 18px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+}
+
+.priority-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.priority-btn:active {
+    transform: scale(0.95);
+}
+
+.priority-btn.priority-high {
+    background: linear-gradient(135deg, #ff4757, #ff3742);
+}
+
+.priority-btn.priority-medium {
+    background: linear-gradient(135deg, #ffa502, #ff9500);
+}
+
+.priority-btn.priority-low {
+    background: linear-gradient(135deg, #ffdd59, #ffd32a);
+}
+
+.priority-btn.active {
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.8), 0 0 0 4px currentColor;
 }
 
 .TextBox::placeholder {
@@ -279,7 +367,7 @@ body {
     display: none;
     align-items: center;
     gap: 4px;
-    margin: 0 8px;
+    margin: 0 4px; /* Reduced from 8px to 4px */
 }
 
 .Todo__Priority button {
@@ -365,7 +453,7 @@ body {
 .Todo__Delete {
     border: none;
     background: none;
-    margin: 0 1em;
+    margin: 0 0.25em; /* Further reduced from 0.5em to 0.25em */
     font-size: 18px;
     color: #ccc;
     display: none;

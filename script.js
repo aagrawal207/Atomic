@@ -9,6 +9,7 @@ const CONFIG = {
 let todos = [];
 let isEditing = false;
 let isTogglingCheckbox = false;
+let newTaskPriority = 'none';
 
 // Utility functions
 const debounce = (func, wait) => {
@@ -219,11 +220,39 @@ function handleAddTodo() {
         return;
     }
     
-    todos.push({ text, completed: false, priority: 'none' });
+    todos.push({ text, completed: false, priority: newTaskPriority });
     saveTodos();
     renderTodos();
     document.getElementById('new-todo').value = '';
+    resetNewTaskPriority();
     hideLimitMessage();
+}
+
+function resetNewTaskPriority() {
+    newTaskPriority = 'none';
+    document.querySelectorAll('.priority-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    document.querySelector('.input-priority-buttons').classList.remove('show');
+    document.getElementById('add-task-btn').classList.remove('show');
+}
+
+function setNewTaskPriority(priority) {
+    // Toggle priority: if same priority is clicked, remove it
+    if (newTaskPriority === priority) {
+        newTaskPriority = 'none';
+    } else {
+        newTaskPriority = priority;
+    }
+    
+    // Update UI
+    document.querySelectorAll('.priority-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    
+    if (newTaskPriority !== 'none') {
+        document.getElementById(`new-priority-${newTaskPriority}`).classList.add('active');
+    }
 }
 
 function handleToggleTodo(index) {
@@ -436,12 +465,44 @@ function initializeEventListeners() {
         handleAddTodo();
     });
     
+    // Input events for showing/hiding priority buttons and add button
+    const inputField = document.getElementById('new-todo');
+    const priorityButtons = document.querySelector('.input-priority-buttons');
+    const addButton = document.getElementById('add-task-btn');
+    
+    inputField.addEventListener('input', () => {
+        if (inputField.value.trim() !== '') {
+            priorityButtons.classList.add('show');
+            addButton.classList.add('show');
+        } else {
+            priorityButtons.classList.remove('show');
+            addButton.classList.remove('show');
+            resetNewTaskPriority();
+        }
+    });
+    
+    // Add button click event
+    addButton.addEventListener('click', handleAddTodo);
+    
     // Input keypress (backup for form submission)
-    document.getElementById('new-todo').addEventListener('keypress', (e) => {
+    inputField.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
             e.preventDefault();
             handleAddTodo();
         }
+    });
+    
+    // Priority buttons for new tasks
+    document.getElementById('new-priority-high').addEventListener('click', () => {
+        setNewTaskPriority('high');
+    });
+    
+    document.getElementById('new-priority-medium').addEventListener('click', () => {
+        setNewTaskPriority('medium');
+    });
+    
+    document.getElementById('new-priority-low').addEventListener('click', () => {
+        setNewTaskPriority('low');
     });
     
     // Clear completed button
