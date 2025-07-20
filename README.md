@@ -34,6 +34,20 @@ Atomic is a productivity-focused browser extension that transforms your new tab 
 4. Select any file from the extension directory
 5. The extension will be active immediately
 
+### Chrome
+1. Download or clone this repository
+2. Run the build script: `./scripts/build.sh`
+3. Open Chrome and navigate to `chrome://extensions`
+4. Enable "Developer mode" (toggle in the top-right)
+5. Click "Load unpacked" and select the `dist/chrome` directory
+6. The extension will be active immediately
+
+### Building for Distribution
+1. Run the build script: `./scripts/build.sh`
+2. Find the distribution packages in the `dist` directory:
+   - `atomic-firefox-v1.0.zip` for Firefox
+   - `atomic-chrome-v1.0.zip` for Chrome
+
 ## 🚀 Usage
 
 ### Getting Started
@@ -65,16 +79,26 @@ Atomic is a productivity-focused browser extension that transforms your new tab 
 - **Web Extensions API** - Browser storage and new tab override
 
 ### Browser Compatibility
-- ✅ **Firefox** (Primary support)
-- ⚠️ **Chrome/Edge** (Manifest v2 - may require updates for v3)
+- ✅ **Firefox** (Manifest v2)
+- ✅ **Chrome/Edge** (Manifest v3)
+
+The build system automatically generates compatible versions for each browser.
 
 ### File Structure
 ```
 atomic-task-manager/
-├── index.html          # Main interface
-├── styles.css          # All styling and animations
-├── script.js           # Core functionality
-├── manifest.json       # Extension configuration
+├── src/                # Source files
+│   ├── index.html      # Main interface
+│   ├── styles.css      # All styling and animations
+│   └── script.js       # Core functionality
+├── manifests/          # Browser-specific manifests
+│   ├── manifest.firefox.json # Firefox-specific manifest (v2)
+│   └── manifest.chrome.json  # Chrome-specific manifest (v3)
+├── scripts/           # Build and utility scripts
+│   └── build.sh       # Build script for creating distributions
+├── icons/             # Extension icons
+├── dist/              # Generated distribution packages
+├── .gitignore         # Git ignore file
 ├── README.md          # Documentation
 └── LICENSE            # MIT License
 ```
@@ -125,11 +149,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📈 Roadmap
 
-- [ ] Manifest V3 compatibility for Chrome
+- [x] Manifest V3 compatibility for Chrome
 - [ ] Dark mode toggle
-- [ ] Pomodoro Timer
 - [ ] Export/import functionality
 - [ ] Sync across devices
+- [ ] Pomodoro Timer
 
 ---
 

@@ -1,0 +1,28 @@
+# Distribution packages
+dist/
+
+# Node modules (if you add any in the future)
+node_modules/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.sublime-*
+.DS_Store
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*~
+
+# Build artifacts
+*.zip
+*.crx
+*.xpi
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
