@@ -210,15 +210,15 @@ body {
 }
 
 .priority-btn.priority-high {
-    background: linear-gradient(135deg, #ff4757, #ff3742);
+    background: linear-gradient(135deg, #dc3545, #c82333);
 }
 
 .priority-btn.priority-medium {
-    background: linear-gradient(135deg, #ffa502, #ff9500);
+    background: linear-gradient(135deg, #fd7e14, #e66100);
 }
 
 .priority-btn.priority-low {
-    background: linear-gradient(135deg, #ffdd59, #ffd32a);
+    background: linear-gradient(135deg, #ffc107, #e0a800);
 }
 
 .priority-btn.active {
@@ -301,15 +301,15 @@ body {
 }
 
 .Todo--priority-high .Todo__Check i:hover {
-    border-color: #ff4757;
+    border-color: #dc3545;
 }
 
 .Todo--priority-medium .Todo__Check i:hover {
-    border-color: #ffa502;
+    border-color: #fd7e14;
 }
 
 .Todo--priority-low .Todo__Check i:hover {
-    border-color: #ffdd59;
+    border-color: #ffc107;
 }
 
 .Todo__Task {
@@ -380,15 +380,15 @@ body {
 }
 
 .Todo__Priority .priority-high {
-    background: linear-gradient(135deg, #ff4757, #ff3742);
+    background: linear-gradient(135deg, #dc3545, #c82333);
 }
 
 .Todo__Priority .priority-medium {
-    background: linear-gradient(135deg, #ffa502, #ff9500);
+    background: linear-gradient(135deg, #fd7e14, #e66100);
 }
 
 .Todo__Priority .priority-low {
-    background: linear-gradient(135deg, #ffdd59, #ffd32a);
+    background: linear-gradient(135deg, #ffc107, #e0a800);
 }
 
 .Todo__Priority button::after {
@@ -410,18 +410,18 @@ body {
 }
 
 .Todo--priority-high {
-    border-left: 3px solid #ff4757;
-    background: linear-gradient(90deg, rgba(255, 71, 87, 0.05), transparent);
+    border-left: 3px solid #dc3545;
+    background: linear-gradient(90deg, rgba(220, 53, 69, 0.05), transparent);
 }
 
 .Todo--priority-medium {
-    border-left: 3px solid #ffa502;
-    background: linear-gradient(90deg, rgba(255, 165, 2, 0.05), transparent);
+    border-left: 3px solid #fd7e14;
+    background: linear-gradient(90deg, rgba(253, 126, 20, 0.05), transparent);
 }
 
 .Todo--priority-low {
-    border-left: 3px solid #ffdd59;
-    background: linear-gradient(90deg, rgba(255, 221, 89, 0.05), transparent);
+    border-left: 3px solid #ffc107;
+    background: linear-gradient(90deg, rgba(255, 193, 7, 0.05), transparent);
 }
 
 .Todo--priority-high .Todo__Task {
@@ -462,18 +462,18 @@ body {
 }
 
 .Todo--priority-high:hover {
-    background: rgba(255, 71, 87, 0.1);
-    border-color: rgba(255, 71, 87, 0.3);
+    background: rgba(220, 53, 69, 0.1);
+    border-color: rgba(220, 53, 69, 0.3);
 }
 
 .Todo--priority-medium:hover {
-    background: rgba(255, 165, 2, 0.1);
-    border-color: rgba(255, 165, 2, 0.3);
+    background: rgba(253, 126, 20, 0.1);
+    border-color: rgba(253, 126, 20, 0.3);
 }
 
 .Todo--priority-low:hover {
-    background: rgba(255, 221, 89, 0.1);
-    border-color: rgba(255, 221, 89, 0.3);
+    background: rgba(255, 193, 7, 0.1);
+    border-color: rgba(255, 193, 7, 0.3);
 }
 
 .Todo:hover .Todo__Priority {
