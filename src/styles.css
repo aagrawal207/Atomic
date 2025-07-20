@@ -331,35 +331,24 @@ body {
 
 .Todo__Task:focus {
     outline: none;
-    background: rgba(39, 174, 96, 0.05);
-    border-left: 3px solid #27ae60;
-    padding-left: calc(1em - 3px);
 }
 
 .Todo__Task--editing {
-    background: rgba(39, 174, 96, 0.05);
-    border-left: 3px solid #27ae60;
-    padding-left: calc(1em - 3px);
+    /* No special styling for edit mode */
 }
 
 .Todo--priority-high .Todo__Task:focus,
 .Todo--priority-high .Todo__Task--editing {
-    background: rgba(255, 71, 87, 0.05);
-    border-left: 3px solid #ff4757;
     caret-color: #d81f3d; /* Darker red for better visibility */
 }
 
 .Todo--priority-medium .Todo__Task:focus,
 .Todo--priority-medium .Todo__Task--editing {
-    background: rgba(255, 165, 2, 0.05);
-    border-left: 3px solid #ffa502;
     caret-color: #e67e00; /* Darker orange for better visibility */
 }
 
 .Todo--priority-low .Todo__Task:focus,
 .Todo--priority-low .Todo__Task--editing {
-    background: rgba(255, 221, 89, 0.05);
-    border-left: 3px solid #ffdd59;
     caret-color: #e6c700; /* Darker yellow for better visibility */
 }
 
