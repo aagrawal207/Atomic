@@ -30,7 +30,7 @@ body {
     font-size: 16px;
     font-family: "Montserrat", sans-serif;
     font-optical-sizing: auto;
-    color: #333;
+    color: #1a1a1a;
 }
 
 .app {
@@ -94,7 +94,7 @@ body {
 
 .DateTime {
     margin: 40px 0;
-    color: #333;
+    color: #1a1a1a;
 }
 
 .DateTime__Date {
@@ -132,8 +132,8 @@ body {
     border: 0;
     width: 100%;
     background: #fff;
-    border: 2px solid #e8f5e8;
-    color: #333;
+    border: 2px solid #c7e5cc;
+    color: #1a1a1a;
     outline: none;
     font-size: 15px;
     padding: 0 150px 0 15px; /* Make room for priority buttons and add button */
@@ -245,9 +245,9 @@ body {
     align-items: center;
     justify-content: space-between;
     min-height: 50px;
-    border: 1px solid #e8f5e8;
+    border: 1px solid #d1e7d1;
     border-top: 0;
-    color: #333;
+    color: #1a1a1a;
     background-color: #fff;
     position: relative;
 }
@@ -258,7 +258,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #888;
+    color: #666;
     cursor: grab;
     font-size: 12px;
     letter-spacing: -2px;
@@ -268,11 +268,11 @@ body {
 }
 
 .Todo__DragHandle:hover {
-    color: #555;
+    color: #333;
 }
 
 .Todo:hover .Todo__DragHandle {
-    color: #444;
+    color: #222;
 }
 
 .Todo__DragHandle:active {
@@ -290,7 +290,7 @@ body {
     display: inline-block;
     height: 1em;
     width: 1em;
-    border: 2px solid #e8f5e8;
+    border: 2px solid #c7e5cc;
     border-radius: 50%;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -410,32 +410,32 @@ body {
 }
 
 .Todo--priority-high {
-    border-left: 3px solid #dc3545;
+    border-left: 6px solid #dc3545;
     background: linear-gradient(90deg, rgba(220, 53, 69, 0.05), transparent);
 }
 
 .Todo--priority-medium {
-    border-left: 3px solid #fd7e14;
+    border-left: 6px solid #fd7e14;
     background: linear-gradient(90deg, rgba(253, 126, 20, 0.05), transparent);
 }
 
 .Todo--priority-low {
-    border-left: 3px solid #ffc107;
+    border-left: 6px solid #ffc107;
     background: linear-gradient(90deg, rgba(255, 193, 7, 0.05), transparent);
 }
 
 .Todo--priority-high .Todo__Task {
-    color: #2c3e50;
+    color: #1a1a1a;
     font-weight: 600;
 }
 
 .Todo--priority-medium .Todo__Task {
-    color: #2c3e50;
+    color: #1a1a1a;
     font-weight: 550;
 }
 
 .Todo--priority-low .Todo__Task {
-    color: #2c3e50;
+    color: #1a1a1a;
     font-weight: 500;
 }
 
@@ -444,7 +444,7 @@ body {
     background: none;
     margin: 0 0.25em; /* Further reduced from 0.5em to 0.25em */
     font-size: 18px;
-    color: #ccc;
+    color: #888;
     display: none;
     width: 24px;
     height: 24px;
@@ -574,9 +574,9 @@ body {
 }
 
 .limit-message {
-    background: #fff8e1;
-    border: 1px solid #ffcc02;
-    color: #b8860b;  
+    background: #fff3cd;
+    border: 1px solid #ffc107;
+    color: #856404;  
     padding: 10px 15px;
     margin: 5px 0;
     border-radius: 6px;
@@ -584,8 +584,8 @@ body {
     text-align: center;
     opacity: 0;
     transition: opacity 0.3s ease;
-    font-weight: 500;
-    box-shadow: 0 2px 4px rgba(255, 204, 2, 0.1);
+    font-weight: 600;
+    box-shadow: 0 2px 4px rgba(255, 193, 7, 0.15);
 }
 
 .limit-message.show {
