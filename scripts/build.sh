@@ -56,8 +56,17 @@ sed 's/browser\.storage/chrome.storage/g' $SRC_DIR/script.js > "$CHROME_DIR/scri
 # Create ZIP files
 echo "Creating distribution packages..."
 cd "$DIST_DIR"
-zip -r "atomic-firefox-v$VERSION.zip" firefox
+
+# For Firefox: zip files inside the firefox folder
+echo "Creating Firefox package (zipping contents)..."
+cd firefox
+zip -r "../atomic-firefox-v$VERSION.zip" .
+cd ..
+
+# For Chrome: zip the entire folder
+echo "Creating Chrome package (zipping folder)..."
 zip -r "atomic-chrome-v$VERSION.zip" chrome
+
 cd ..
 
 echo "Build completed successfully!"
