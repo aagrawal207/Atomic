@@ -45,8 +45,8 @@ Atomic is a productivity-focused browser extension that transforms your new tab 
 ### Building for Distribution
 1. Run the build script: `./scripts/build.sh`
 2. Find the distribution packages in the `dist` directory:
-   - `atomic-firefox-v1.0.zip` for Firefox
-   - `atomic-chrome-v1.0.zip` for Chrome
+   - `atomic-firefox-v1.2.zip` for Firefox
+   - `atomic-chrome-v1.2.zip` for Chrome
 
 ## 🚀 Usage
 
