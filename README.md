@@ -15,7 +15,7 @@ Atomic is a productivity-focused browser extension that transforms your new tab 
 ### Enhanced User Experience
 - **Drag & Drop Reordering**: Intuitive task reordering with dedicated drag handles
 - **Smart Task Editing**: Click to edit with optimized cursor positioning and keyboard shortcuts
-- **Focus Mode**: 8-task limit encourages prioritization and reduces overwhelm
+- **Focus Mode**: 12-task limit encourages prioritization and reduces overwhelm
 - **Batch Operations**: Clear all completed tasks with one click
 - **Minimalist Design**: Clean green-themed interface with subtle animations
 
@@ -65,7 +65,7 @@ Atomic is a productivity-focused browser extension that transforms your new tab 
 - **Double-click** - Select all text in a task for quick replacement
 
 ### Task Management Tips
-- **Prioritize**: The 8-task limit encourages you to focus on what matters most
+- **Prioritize**: The 12-task limit encourages you to focus on what matters most
 - **Complete regularly**: Mark tasks as done to maintain momentum
 - **Edit efficiently**: Click anywhere in task text to start editing
 - **Organize**: Drag tasks to arrange by priority or category
@@ -107,7 +107,7 @@ atomic-task-manager/
 
 Atomic follows a **minimalist design philosophy** with these principles:
 
-- **Focus First**: Limited to 8 tasks to prevent overwhelm
+- **Focus First**: Limited to 12 tasks to prevent overwhelm
 - **Clean Interface**: Distraction-free environment with subtle green accents
 - **Intuitive Interactions**: Every action should feel natural and immediate
 - **Performance**: Lightweight and fast, no unnecessary dependencies
