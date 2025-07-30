@@ -38,6 +38,20 @@ body {
     max-width: 600px;
     width: 100%;
     margin: 0 auto;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: appLoad 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes appLoad {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Responsive design improvements */
@@ -95,6 +109,19 @@ body {
 .DateTime {
     margin: 40px 0;
     color: #1a1a1a;
+    opacity: 0;
+    animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s forwards;
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .DateTime__Date {
@@ -125,6 +152,8 @@ body {
 .input-container {
     position: relative;
     width: 100%;
+    opacity: 0;
+    animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.4s forwards;
 }
 
 .TextBox {
@@ -238,6 +267,8 @@ body {
 .Todolist {
     list-style-type: none;
     padding: 0;
+    opacity: 0;
+    animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.6s forwards;
 }
 
 .Todo {
@@ -519,7 +550,6 @@ body {
     margin-top: -1px;
     position: relative;
     z-index: 1;
-    animation: shiftDown 0.2s ease;
 }
 
 .Todo.drag-over-bottom {
@@ -527,17 +557,6 @@ body {
     margin-bottom: -1px;
     position: relative;
     z-index: 1;
-    animation: shiftUp 0.2s ease;
-}
-
-@keyframes shiftDown {
-    0% { transform: translateY(-5px); }
-    100% { transform: translateY(0); }
-}
-
-@keyframes shiftUp {
-    0% { transform: translateY(5px); }
-    100% { transform: translateY(0); }
 }
 
 .header-section {
