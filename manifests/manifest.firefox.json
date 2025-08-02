@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Atomic",
   "version": "2.0",
-  "description": "Transform your new tab into a minimalist task manager. Focus on what matters with a clean, elegant interface and smart task prioritization.",
+  "description": "Transform your new tab into a minimalist task manager. Focus on what matters with a clean, elegant interface and smart task prioritization. Also available for Chrome.",
   "homepage_url": "https://github.com/aagrawal207/Atomic",
   "chrome_url_overrides": {
     "newtab": "index.html"
@@ -12,7 +12,7 @@
   ],
   "browser_specific_settings": {
     "gecko": {
-      "id": "atomic@example.com"
+      "id": "atomic@aagrawal207.github.io"
     }
   },
   "icons": {

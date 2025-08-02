@@ -603,7 +603,7 @@ function deleteSubtask(index) {
 
 function handleClickOutside(e) {
     const panel = document.getElementById('task-details');
-    if (!panel.contains(e.target) && !e.target.closest('.Todo__Details')) {
+    if (!panel.contains(e.target) && !e.target.closest('.Todo__Details') && !e.target.closest('.subtask-delete')) {
         closeTaskDetails();
     }
 }

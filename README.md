@@ -27,14 +27,22 @@ Atomic is a productivity-focused browser extension that transforms your new tab 
 
 ## 📦 Installation
 
-### Firefox
+### 🔥 Quick Install (Recommended)
+
+**Firefox**: [Install from Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/atomic/)
+
+**Chrome**: [Install from Chrome Web Store](https://chromewebstore.google.com/detail/atomic/aeohhggbehahgofgddiahgnncealepnb?hl=en)
+
+### 🛠️ Manual Installation (Development)
+
+#### Firefox
 1. Download or clone this repository
 2. Open Firefox and navigate to `about:debugging`
 3. Click "This Firefox" → "Load Temporary Add-on"
 4. Select any file from the extension directory
 5. The extension will be active immediately
 
-### Chrome
+#### Chrome
 1. Download or clone this repository
 2. Run the build script: `./scripts/build.sh`
 3. Open Chrome and navigate to `chrome://extensions`
