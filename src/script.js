@@ -15,6 +15,9 @@ let currentTaskIndex = null;
 
 let isDetailsOpen = false;
 
+// Theme management
+let currentTheme = 'light';
+
 // Utility functions
 const debounce = (func, wait) => {
     let timeout;
@@ -627,6 +630,50 @@ function hideLimitMessage() {
     }, 300);
 }
 
+// Theme functions
+function loadTheme() {
+    try {
+        browser.storage.local.get('theme').then(result => {
+            currentTheme = result.theme || 'light';
+            applyTheme(currentTheme);
+            updateThemeIcon();
+        }).catch(error => {
+            console.log('Failed to load theme, using default:', error);
+            applyTheme('light');
+        });
+    } catch (error) {
+        console.log('Browser storage not available, using default theme');
+        applyTheme('light');
+    }
+}
+
+function saveTheme(theme) {
+    try {
+        browser.storage.local.set({ theme });
+    } catch (error) {
+        console.log('Failed to save theme:', error);
+    }
+}
+
+function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    currentTheme = theme;
+}
+
+function toggleTheme() {
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+    applyTheme(newTheme);
+    saveTheme(newTheme);
+    updateThemeIcon();
+}
+
+function updateThemeIcon() {
+    const themeToggle = document.getElementById('theme-toggle');
+    if (themeToggle) {
+        themeToggle.textContent = currentTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
+    }
+}
+
 // Event listeners
 function initializeEventListeners() {
     // Form submission
@@ -678,7 +725,8 @@ function initializeEventListeners() {
     // Clear completed button
     document.getElementById('clear-completed').addEventListener('click', handleClearCompleted);
     
-
+    // Theme toggle button
+    document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
     
     // Task details panel
     document.getElementById('close-details').addEventListener('click', closeTaskDetails);
@@ -717,12 +765,14 @@ async function initialize() {
         
         renderTodos();
         initializeEventListeners();
+        loadTheme();
     } catch (error) {
         console.error('Failed to load todos:', error);
         // Initialize with empty array if storage fails
         todos = [];
         renderTodos();
         initializeEventListeners();
+        loadTheme();
     }
 }
 
