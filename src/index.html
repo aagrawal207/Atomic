@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -38,10 +39,34 @@
             <ul id="todo-list" class="Todolist" role="list"></ul>
             
             <div id="limit-message" class="limit-message" hidden role="alert">
-                Maximum of 8 tasks allowed. Complete or delete existing tasks to add new ones.
+                Maximum of 10 tasks allowed. Complete or delete existing tasks to add new ones.
             </div>
+            
+
         </section>
     </main>
+    
+    <!-- Task Details Panel -->
+    <div id="task-details" class="task-details" hidden>
+        <div class="task-details-header">
+            <h4 id="task-details-title">Task Details</h4>
+            <button id="close-details" class="close-btn">×</button>
+        </div>
+        <div class="task-details-content">
+            <div class="notes-section">
+                <label for="task-notes">Notes:</label>
+                <textarea id="task-notes" placeholder="Add notes for this task..."></textarea>
+            </div>
+            <div class="subtasks-section">
+                <label>Subtasks:</label>
+                <div class="subtask-input">
+                    <input type="text" id="new-subtask" placeholder="Add a subtask...">
+                    <button id="add-subtask" class="add-subtask-btn">+</button>
+                </div>
+                <ul id="subtasks-list" class="subtasks-list"></ul>
+            </div>
+        </div>
+    </div>
     
     <div class="app-branding">Atomic</div>
     

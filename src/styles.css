@@ -473,7 +473,7 @@ body {
 .Todo__Delete {
     border: none;
     background: none;
-    margin: 0 0.25em; /* Further reduced from 0.5em to 0.25em */
+    margin-left: 0.1em;
     font-size: 18px;
     color: #888;
     display: none;
@@ -564,6 +564,7 @@ body {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 8px;
+    min-height: 24px;
 }
 
 .clear-link {
@@ -575,10 +576,16 @@ body {
     cursor: pointer;
     padding: 4px 8px;
     border-radius: 3px;
-    transition: all 0.2s ease;
+    transition: opacity 0.2s ease;
     text-transform: lowercase;
     font-weight: 400;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.clear-link:not([hidden]) {
     opacity: 0.7;
+    visibility: visible;
 }
 
 .clear-link:hover {
@@ -624,4 +631,230 @@ body {
 
 .app-branding:hover {
     opacity: 1;
+}
+
+
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.close-btn:hover {
+    background: rgba(0,0,0,0.1);
+    color: #333;
+}
+
+/* Task Details Panel */
+.task-details {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 350px;
+    height: 100vh;
+    background: white;
+    box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+    z-index: 1000;
+    overflow-y: auto;
+}
+
+.task-details-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #e0e0e0;
+    background: #f8fdf9;
+}
+
+.task-details-header h4 {
+    margin: 0;
+    color: #27ae60;
+    font-size: 16px;
+    max-width: 250px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.task-details-content {
+    padding: 20px;
+}
+
+.notes-section, .subtasks-section {
+    margin-bottom: 25px;
+}
+
+.notes-section label, .subtasks-section label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #333;
+}
+
+#task-notes {
+    width: 100%;
+    min-height: 80px;
+    padding: 10px;
+    border: 2px solid #e0e0e0;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 14px;
+    resize: vertical;
+    transition: border-color 0.2s ease;
+}
+
+#task-notes:focus {
+    outline: none;
+    border-color: #27ae60;
+}
+
+.subtask-input {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+#new-subtask {
+    flex: 1;
+    padding: 8px 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 14px;
+    transition: border-color 0.2s ease;
+}
+
+#new-subtask:focus {
+    outline: none;
+    border-color: #27ae60;
+}
+
+.add-subtask-btn {
+    padding: 8px 12px;
+    background: #27ae60;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background 0.2s ease;
+}
+
+.add-subtask-btn:hover {
+    background: #219653;
+}
+
+.subtasks-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.subtask {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.subtask:last-child {
+    border-bottom: none;
+}
+
+.subtask input[type="checkbox"] {
+    margin: 0;
+}
+
+.subtask span {
+    flex: 1;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.subtask.completed span {
+    text-decoration: line-through;
+    color: #999;
+}
+
+.subtask-delete {
+    background: none;
+    border: none;
+    color: #999;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 2px 6px;
+    border-radius: 3px;
+    transition: all 0.2s ease;
+}
+
+.subtask-delete:hover {
+    background: #f0f0f0;
+    color: #e74c3c;
+}
+
+/* App shifting when details panel is open */
+.app.shifted {
+    transform: translateX(-175px);
+    transition: transform 0.3s ease;
+}
+
+.Todo__Details {
+    border: none;
+    background: none;
+    margin-right: 0.60em;
+    font-size: 14px;
+    color: #888;
+    display: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    line-height: 1;
+    text-align: center;
+}
+
+.Todo--has-details .Todo__Details {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #27ae60;
+}
+
+.Todo:hover .Todo__Details {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.Todo__Details:hover {
+    background: rgba(39, 174, 96, 0.1);
+    color: #27ae60;
+}
+
+
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .task-details {
+        width: 100vw;
+    }
+    
+    .app.shifted {
+        transform: translateX(-100vw);
+    }
 }

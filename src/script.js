@@ -1,15 +1,19 @@
 // Configuration
 const CONFIG = {
-    MAX_TASKS: 12,
+    MAX_TASKS: 10,
     AUTO_HIDE_DELAY: 3000,
     DEBOUNCE_DELAY: 300
 };
 
 // State management
 let todos = [];
+
 let isEditing = false;
 let isTogglingCheckbox = false;
 let newTaskPriority = 'none';
+let currentTaskIndex = null;
+
+let isDetailsOpen = false;
 
 // Utility functions
 const debounce = (func, wait) => {
@@ -192,6 +196,15 @@ function createTodoElement(todo, index) {
     priorityDiv.appendChild(mediumPriorityBtn);
     priorityDiv.appendChild(lowPriorityBtn);
 
+    const detailsButton = document.createElement('button');
+    detailsButton.className = 'Todo__Details';
+    detailsButton.innerHTML = (todo.notes || (todo.subtasks && todo.subtasks.length > 0)) ? '●' : '○';
+    detailsButton.title = 'View details';
+    detailsButton.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openTaskDetails(index);
+    });
+
     const deleteButton = document.createElement('button');
     deleteButton.className = 'Todo__Delete';
     deleteButton.textContent = '×';
@@ -202,11 +215,17 @@ function createTodoElement(todo, index) {
         li.classList.add(`Todo--priority-${todo.priority}`);
     }
 
+    // Add indicator for tasks with notes or subtasks
+    if (todo.notes || (todo.subtasks && todo.subtasks.length > 0)) {
+        li.classList.add('Todo--has-details');
+    }
+
     li.appendChild(dragHandle);
     li.appendChild(checkDiv);
     li.appendChild(taskSpan);
     li.appendChild(priorityDiv);
     li.appendChild(deleteButton);
+    li.appendChild(detailsButton);
 
     return li;
 }
@@ -220,7 +239,13 @@ function handleAddTodo() {
         return;
     }
     
-    todos.push({ text, completed: false, priority: newTaskPriority });
+    todos.push({ 
+        text, 
+        completed: false, 
+        priority: newTaskPriority,
+        notes: '',
+        subtasks: []
+    });
     saveTodos();
     renderTodos();
     document.getElementById('new-todo').value = '';
@@ -432,13 +457,158 @@ function toggleClearButtonVisibility() {
 }
 
 function handleClearCompleted() {
-    const completedCount = todos.filter(todo => todo.completed).length;
-    if (completedCount === 0) return;
+    const completedTasks = todos.filter(todo => todo.completed);
+    if (completedTasks.length === 0) return;
     
-    todos = todos.filter(todo => !todo.completed);
+    // Remove completed tasks with animation (bottom to top)
+    const completedElements = Array.from(document.querySelectorAll('.Todo--checked'));
+    completedElements.reverse().forEach((el, i) => {
+        setTimeout(() => {
+            el.classList.add('animate__animated', 'animate__fadeOutRight');
+        }, i * 100);
+    });
+    
+    setTimeout(() => {
+        todos = todos.filter(todo => !todo.completed);
+        saveTodos();
+        renderTodos();
+    }, completedElements.length * 100 + 300);
+}
+
+function openTaskDetails(index) {
+    if (isDetailsOpen && currentTaskIndex === index) {
+        closeTaskDetails();
+        return;
+    }
+    
+    currentTaskIndex = index;
+    const task = todos[index];
+    const panel = document.getElementById('task-details');
+    const title = document.getElementById('task-details-title');
+    const notes = document.getElementById('task-notes');
+    
+    title.textContent = task.text;
+    notes.value = task.notes || '';
+    
+    // Render subtasks
+    renderSubtasks();
+    
+    // Show panel with animation
+    panel.hidden = false;
+    panel.classList.add('animate__animated', 'animate__slideInRight');
+    
+    // Shift main content
+    document.querySelector('.app').classList.add('shifted');
+    isDetailsOpen = true;
+    
+    // Add click-outside listener
+    setTimeout(() => {
+        document.addEventListener('click', handleClickOutside);
+    }, 100);
+}
+
+function closeTaskDetails() {
+    const panel = document.getElementById('task-details');
+    panel.classList.remove('animate__slideInRight');
+    panel.classList.add('animate__slideOutRight');
+    
+    setTimeout(() => {
+        panel.hidden = true;
+        panel.classList.remove('animate__animated', 'animate__slideOutRight');
+        document.querySelector('.app').classList.remove('shifted');
+    }, 300);
+    
+    currentTaskIndex = null;
+    isDetailsOpen = false;
+    
+    // Remove click-outside listener
+    document.removeEventListener('click', handleClickOutside);
+}
+
+function saveTaskNotes() {
+    if (currentTaskIndex === null) return;
+    const notes = document.getElementById('task-notes').value;
+    todos[currentTaskIndex].notes = notes;
     saveTodos();
     renderTodos();
 }
+
+function addSubtask() {
+    if (currentTaskIndex === null) return;
+    const input = document.getElementById('new-subtask');
+    const text = input.value.trim();
+    if (!text) return;
+    
+    if (!todos[currentTaskIndex].subtasks) {
+        todos[currentTaskIndex].subtasks = [];
+    }
+    
+    todos[currentTaskIndex].subtasks.push({
+        text,
+        completed: false,
+        id: Date.now()
+    });
+    
+    input.value = '';
+    saveTodos();
+    renderSubtasks();
+    renderTodos();
+}
+
+function renderSubtasks() {
+    if (currentTaskIndex === null) return;
+    const subtasksList = document.getElementById('subtasks-list');
+    const subtasks = todos[currentTaskIndex].subtasks || [];
+    
+    subtasksList.innerHTML = '';
+    
+    subtasks.forEach((subtask, index) => {
+        const li = document.createElement('li');
+        li.className = `subtask ${subtask.completed ? 'completed' : ''}`;
+        
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.checked = subtask.completed;
+        checkbox.addEventListener('change', () => toggleSubtask(index));
+        
+        const span = document.createElement('span');
+        span.textContent = subtask.text;
+        
+        const deleteBtn = document.createElement('button');
+        deleteBtn.textContent = '×';
+        deleteBtn.className = 'subtask-delete';
+        deleteBtn.addEventListener('click', () => deleteSubtask(index));
+        
+        li.appendChild(checkbox);
+        li.appendChild(span);
+        li.appendChild(deleteBtn);
+        subtasksList.appendChild(li);
+    });
+}
+
+function toggleSubtask(index) {
+    if (currentTaskIndex === null) return;
+    todos[currentTaskIndex].subtasks[index].completed = !todos[currentTaskIndex].subtasks[index].completed;
+    saveTodos();
+    renderSubtasks();
+}
+
+function deleteSubtask(index) {
+    if (currentTaskIndex === null) return;
+    todos[currentTaskIndex].subtasks.splice(index, 1);
+    saveTodos();
+    renderSubtasks();
+    renderTodos();
+}
+
+function handleClickOutside(e) {
+    const panel = document.getElementById('task-details');
+    if (!panel.contains(e.target) && !e.target.closest('.Todo__Details')) {
+        closeTaskDetails();
+    }
+}
+
+
 
 function showLimitMessage() {
     const messageElement = document.getElementById('limit-message');
@@ -508,6 +678,19 @@ function initializeEventListeners() {
     // Clear completed button
     document.getElementById('clear-completed').addEventListener('click', handleClearCompleted);
     
+
+    
+    // Task details panel
+    document.getElementById('close-details').addEventListener('click', closeTaskDetails);
+    document.getElementById('task-notes').addEventListener('blur', saveTaskNotes);
+    document.getElementById('add-subtask').addEventListener('click', addSubtask);
+    document.getElementById('new-subtask').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            addSubtask();
+        }
+    });
+    
     // Date/time updates
     setInterval(updateDateTime, 1000);
     updateDateTime();
@@ -519,14 +702,16 @@ async function initialize() {
         const result = await browser.storage.local.get('todos');
         todos = result.todos || [];
         
-        // Add backward compatibility for existing todos without priority
+        // Add backward compatibility for existing todos
         todos = todos.map(todo => ({
             ...todo,
-            priority: todo.priority || 'none'
+            priority: todo.priority || 'none',
+            notes: todo.notes || '',
+            subtasks: todo.subtasks || []
         }));
         
-        // Save updated todos if any were missing priority
-        if (todos.some(todo => !('priority' in todo))) {
+        // Save updated todos if any were missing fields
+        if (todos.some(todo => !('priority' in todo) || !('notes' in todo) || !('subtasks' in todo))) {
             saveTodos();
         }
         
