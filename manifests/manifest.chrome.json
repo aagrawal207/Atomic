@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Atomic",
-  "version": "2.0",
+  "version": "2.1",
   "description": "Transform your new tab into a minimalist task manager. Focus on what matters with a clean interface and smart task prioritization. Also available for Firefox.",
   "homepage_url": "https://github.com/aagrawal207/Atomic",
   "chrome_url_overrides": {
