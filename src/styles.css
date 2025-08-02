@@ -36,14 +36,14 @@
 }
 
 [data-theme="dark"] {
-    --bg-color: #1a1a1a;
+    --bg-color: #1a1f1a;
     --text-color: #e8e8e8;
     --primary-color: #4ade80;
     --primary-dark: #22c55e;
     --primary-light: #374151;
-    --card-bg: #2d2d2d;
+    --card-bg: #252a25;
     --card-border: #374151;
-    --input-bg: #2d2d2d;
+    --input-bg: #252a25;
     --input-border: #374151;
     --input-border-focus: #4ade80;
     --todo-border: #374151;
@@ -54,9 +54,9 @@
     --shadow-medium: rgba(0,0,0,0.4);
     --muted-text: #9ca3af;
     --disabled-text: #a1a1aa;
-    --panel-bg: #2d2d2d;
+    --panel-bg: #252a25;
     --panel-border: #374151;
-    --panel-header-bg: #1f2937;
+    --panel-header-bg: #1e2620;
     --limit-message-bg: #451a03;
     --limit-message-border: #92400e;
     --limit-message-text: #fbbf24;
