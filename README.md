@@ -17,6 +17,7 @@ Atomic is a productivity-focused browser extension that transforms your new tab 
 - **Smart Task Editing**: Click to edit with optimized cursor positioning and keyboard shortcuts
 - **Focus Mode**: 12-task limit encourages prioritization and reduces overwhelm
 - **Batch Operations**: Clear all completed tasks with one click
+- **Dark Mode**: Toggle between light and dark themes for comfortable viewing
 - **Minimalist Design**: Clean green-themed interface with subtle animations
 
 ### Technical Features
@@ -158,7 +159,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 📈 Roadmap
 
 - [x] Manifest V3 compatibility for Chrome
-- [ ] Dark mode toggle
+- [x] Dark mode toggle
 - [ ] Export/import functionality
 - [ ] Sync across devices
 - [ ] Pomodoro Timer
