@@ -1,6 +1,6 @@
 // Configuration
 const CONFIG = {
-    MAX_TASKS: 10,
+    MAX_TASKS: 12,
     AUTO_HIDE_DELAY: 3000,
     DEBOUNCE_DELAY: 300
 };
